@@ -69,206 +69,224 @@ export type FamilyOverview = {
   usageEvents: UsageEvent[];
 };
 
-const family: FamilyOverview = {
-  id: "family-aravena",
-  name: "Familia Aravena",
-  parents: [
-    { id: "parent-camila", name: "Camila", role: "Madre", avatarColor: "var(--teal)" },
-    { id: "parent-felipe", name: "Felipe", role: "Padre", avatarColor: "var(--ink)" },
-  ],
-  children: [
-    {
-      id: "child-luna",
-      fullName: "Luna Aravena",
-      nickname: "Lu",
-      age: 5,
-      avatarColor: "#C04A6A",
-      diagnosisBase: "TDAH leve",
-      personality: "Muy empatica, sensible a ruidos fuertes, le encantan los animales.",
-      toyId: "toy-teddy",
-    },
-    {
-      id: "child-mateo",
-      fullName: "Mateo Aravena",
-      nickname: "Teo",
-      age: 7,
-      avatarColor: "#4A6FA5",
-      diagnosisBase: "Sin diagnostico base",
-      personality: "Curioso, creativo, disfruta construir historias con bloques y dibujos.",
-      toyId: "toy-nube",
-    },
-  ],
-  toys: [
-    {
-      id: "toy-teddy",
-      childId: "child-luna",
-      name: "Teddy",
-      kind: "Osito de peluche azul",
-      style: "Suave y calido",
-      description: "Le gusta inventar canciones cortas. Escucha con atencion y habla con mucho carino.",
-      color: "#4A6FA5",
-      status: "online",
-      battery: 82,
-      lastUsedAt: "2026-05-03T15:42:00",
-    },
-    {
-      id: "toy-nube",
-      childId: "child-mateo",
-      name: "Nube",
-      kind: "Conejo de tela",
-      style: "Curioso y jugueton",
-      description: "Hace preguntas simples, propone juegos de imaginacion y ayuda a ordenar ideas.",
-      color: "#3A8A5A",
-      status: "idle",
-      battery: 64,
-      lastUsedAt: "2026-05-03T11:10:00",
-    },
-  ],
-  sessions: [
-    {
-      id: "session-luna-1",
-      childId: "child-luna",
-      toyId: "toy-teddy",
-      status: "active",
-      startedAt: "2026-05-03T15:42:00",
-      summary: "Lu hablo con Teddy sobre su miedo antes de ir al doctor.",
-      emotion: "Ansiosa",
-      messages: [
-        {
-          id: "msg-1",
-          role: "child",
-          text: "Teddy, tengo miedo de ir al doctor",
-          sentAt: "2026-05-03T15:42:00",
-        },
-        {
-          id: "msg-2",
-          role: "toy",
-          text: "Entiendo, Lu. Los doctores ayudan a que te sientas mejor, y yo voy a estar pensando en ti.",
-          sentAt: "2026-05-03T15:42:20",
-        },
-        {
-          id: "msg-3",
-          role: "child",
-          text: "Me va a doler?",
-          sentAt: "2026-05-03T15:43:00",
-        },
-        {
-          id: "msg-4",
-          role: "toy",
-          text: "A veces un poquito, pero tu eres muy valiente. Quieres que inventemos una cancion para ir juntos?",
-          sentAt: "2026-05-03T15:43:20",
-        },
-      ],
-    },
-    {
-      id: "session-luna-2",
-      childId: "child-luna",
-      toyId: "toy-teddy",
-      status: "closed",
-      startedAt: "2026-05-02T18:05:00",
-      endedAt: "2026-05-02T18:17:00",
-      durationMin: 12,
-      summary: "Teddy ayudo a Lu a bajar la frustracion despues de una tarea dificil.",
-      emotion: "Frustrada",
-      messages: [
-        {
-          id: "msg-5",
-          role: "child",
-          text: "No quiero hacer la tarea, es muy dificil.",
-          sentAt: "2026-05-02T18:05:00",
-        },
-        {
-          id: "msg-6",
-          role: "toy",
-          text: "Podemos partir por una parte pequena. Yo te acompano y despues descansamos.",
-          sentAt: "2026-05-02T18:06:00",
-        },
-        {
-          id: "msg-7",
-          role: "child",
-          text: "Solo una parte.",
-          sentAt: "2026-05-02T18:07:00",
-        },
-      ],
-    },
-    {
-      id: "session-mateo-1",
-      childId: "child-mateo",
-      toyId: "toy-nube",
-      status: "closed",
-      startedAt: "2026-05-03T11:10:00",
-      endedAt: "2026-05-03T11:21:00",
-      durationMin: 11,
-      summary: "Mateo y Nube inventaron una historia sobre astronautas.",
-      emotion: "Entusiasmado",
-      messages: [
-        {
-          id: "msg-8",
-          role: "child",
-          text: "Nube, quiero hacer un cohete.",
-          sentAt: "2026-05-03T11:10:00",
-        },
-        {
-          id: "msg-9",
-          role: "toy",
-          text: "Buena idea, capitan Teo. Que planeta vamos a visitar primero?",
-          sentAt: "2026-05-03T11:10:30",
-        },
-      ],
-    },
-  ],
-  usageEvents: [
-    {
-      id: "usage-1",
-      childId: "child-luna",
-      toyId: "toy-teddy",
-      usedAt: "2026-05-03T15:42:00",
-      label: "Teddy fue usado por Lu",
-      detail: "Sesion activa, 4 mensajes registrados.",
-      sessionId: "session-luna-1",
-    },
-    {
-      id: "usage-2",
-      childId: "child-mateo",
-      toyId: "toy-nube",
-      usedAt: "2026-05-03T11:10:00",
-      label: "Nube converso con Teo",
-      detail: "Historia guiada, 11 minutos.",
-      sessionId: "session-mateo-1",
-    },
-    {
-      id: "usage-3",
-      childId: "child-luna",
-      toyId: "toy-teddy",
-      usedAt: "2026-05-02T18:05:00",
-      label: "Teddy acompano una frustracion",
-      detail: "Sesion cerrada, emocion detectada: frustrada.",
-      sessionId: "session-luna-2",
-    },
-  ],
+type BackendChild = {
+  id: number;
+  name: string;
+  age: number;
+  toy_name: string | null;
+  created_at: string;
 };
 
-const wait = async <T,>(value: T): Promise<T> =>
-  new Promise((resolve) => {
-    window.setTimeout(() => resolve(value), 80);
+type BackendSession = {
+  id: number;
+  child_id: number;
+  status: string;
+  started_at: string;
+  ended_at: string | null;
+};
+
+type BackendTurn = {
+  id: number;
+  session_id: number;
+  role: "child" | "assistant" | "toy" | string;
+  text: string;
+  created_at: string;
+};
+
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL ?? "https://innovabackend-production-c18a.up.railway.app"
+).replace(/\/+$/, "");
+
+const childColors = ["#C04A6A", "#4A6FA5", "#3A8A5A", "#C47A1E"];
+const toyColors = ["#4A6FA5", "#3A8A5A", "#2B8C8C", "#C04A6A"];
+
+async function fetchJson<T>(path: string): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`);
+
+  if (!response.ok) {
+    throw new Error(`Backend request failed: ${response.status} ${path}`);
+  }
+
+  return response.json() as Promise<T>;
+}
+
+function mapChild(child: BackendChild, index: number): Child {
+  const name = child.name || `Niño ${child.id}`;
+
+  return {
+    id: String(child.id),
+    fullName: name,
+    nickname: name.split(" ")[0],
+    age: child.age,
+    avatarColor: childColors[index % childColors.length],
+    diagnosisBase: "No registrado en backend",
+    personality: "Perfil pendiente de completar desde el panel de padres.",
+    toyId: toyIdForChild(child.id),
+  };
+}
+
+function mapToy(child: BackendChild, index: number, activeSession?: BackendSession | null): Toy {
+  const toyName = child.toy_name || "Peluche";
+  const lastUsedAt = activeSession?.started_at ?? child.created_at;
+
+  return {
+    id: toyIdForChild(child.id),
+    childId: String(child.id),
+    name: toyName,
+    kind: "Peluche conectado",
+    style: "Acompañante y tranquilo",
+    description: `${toyName} conversa con ${child.name} y registra las sesiones para que los papas puedan revisarlas.`,
+    color: toyColors[index % toyColors.length],
+    status: activeSession ? "online" : "idle",
+    battery: 100,
+    lastUsedAt,
+  };
+}
+
+function mapSession(session: BackendSession, child: BackendChild, messages: ConversationMessage[]): ConversationSession {
+  const lastChildMessage = [...messages].reverse().find((message) => message.role === "child");
+  const lastToyMessage = [...messages].reverse().find((message) => message.role === "toy");
+  const summary = lastChildMessage
+    ? `${child.name} dijo: "${lastChildMessage.text}"`
+    : `Sesion activa iniciada para ${child.name}.`;
+
+  return {
+    id: String(session.id),
+    childId: String(session.child_id),
+    toyId: toyIdForChild(session.child_id),
+    status: session.status === "closed" ? "closed" : "active",
+    startedAt: session.started_at,
+    endedAt: session.ended_at ?? undefined,
+    durationMin: session.ended_at ? minutesBetween(session.started_at, session.ended_at) : undefined,
+    summary: lastToyMessage ? `${summary} Ultima respuesta del peluche registrada.` : summary,
+    emotion: inferEmotion(messages),
+    messages,
+  };
+}
+
+function mapTurn(turn: BackendTurn): ConversationMessage {
+  return {
+    id: String(turn.id),
+    role: turn.role === "child" ? "child" : "toy",
+    text: turn.text,
+    sentAt: turn.created_at,
+  };
+}
+
+function toyIdForChild(childId: number) {
+  return `toy-${childId}`;
+}
+
+function minutesBetween(start: string, end: string) {
+  return Math.max(1, Math.round((new Date(end).getTime() - new Date(start).getTime()) / 60000));
+}
+
+function inferEmotion(messages: ConversationMessage[]) {
+  const text = messages
+    .filter((message) => message.role === "child")
+    .map((message) => message.text.toLowerCase())
+    .join(" ");
+
+  if (text.includes("nervios") || text.includes("nervioso") || text.includes("vergüenza")) return "Nervioso";
+  if (text.includes("triste") || text.includes("llorar")) return "Triste";
+  if (text.includes("enojado") || text.includes("rabia")) return "Enojado";
+  if (text.includes("miedo")) return "Asustado";
+  return undefined;
+}
+
+function usageFromSession(session: ConversationSession, child: Child, toy: Toy): UsageEvent {
+  const lastMessage = session.messages[session.messages.length - 1];
+
+  return {
+    id: `usage-${session.id}`,
+    childId: child.id,
+    toyId: toy.id,
+    usedAt: lastMessage?.sentAt ?? session.startedAt,
+    label: `${toy.name} fue usado por ${child.nickname}`,
+    detail: `${session.status === "active" ? "Sesion activa" : "Sesion cerrada"}, ${session.messages.length} mensajes registrados.`,
+    sessionId: session.id,
+  };
+}
+
+async function getActiveSessionForChild(childId: number) {
+  const session = await fetchJson<BackendSession | null>(`/sessions/active/${childId}`);
+  return session && "id" in session ? session : null;
+}
+
+async function getTurnsForSession(sessionId: number) {
+  const turns = await fetchJson<BackendTurn[] | { error: string }>(`/sessions/${sessionId}/turns`);
+  return Array.isArray(turns) ? turns.map(mapTurn) : [];
+}
+
+async function buildFamilyOverview(): Promise<FamilyOverview> {
+  const backendChildren = await fetchJson<BackendChild[]>("/children");
+  const activeSessions = await Promise.all(
+    backendChildren.map(async (child) => ({
+      child,
+      activeSession: await getActiveSessionForChild(child.id),
+    })),
+  );
+
+  const children = backendChildren.map(mapChild);
+  const toys = backendChildren.map((child, index) => {
+    const activeSession = activeSessions.find((entry) => entry.child.id === child.id)?.activeSession;
+    return mapToy(child, index, activeSession);
   });
 
+  const sessions = (
+    await Promise.all(
+      activeSessions
+        .filter((entry): entry is { child: BackendChild; activeSession: BackendSession } => Boolean(entry.activeSession))
+        .map(async ({ child, activeSession }) => {
+          const messages = await getTurnsForSession(activeSession.id);
+          return mapSession(activeSession, child, messages);
+        }),
+    )
+  ).sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime());
+
+  const usageEvents = sessions
+    .map((session) => {
+      const child = children.find((item) => item.id === session.childId);
+      const toy = toys.find((item) => item.id === session.toyId);
+      return child && toy ? usageFromSession(session, child, toy) : null;
+    })
+    .filter((event): event is UsageEvent => Boolean(event))
+    .sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
+
+  return {
+    id: "backend-family",
+    name: "Mi familia",
+    parents: [{ id: "parent-default", name: "Papa/Mama", role: "Cuidador", avatarColor: "var(--teal)" }],
+    children,
+    toys,
+    sessions,
+    usageEvents,
+  };
+}
+
+let familyCache: FamilyOverview | null = null;
+
 export async function getFamilyOverview(): Promise<FamilyOverview> {
-  return wait(family);
+  familyCache = await buildFamilyOverview();
+  return familyCache;
 }
 
 export async function getChild(childId: string): Promise<Child | undefined> {
-  return wait(family.children.find((child) => child.id === childId));
+  const family = familyCache ?? (await getFamilyOverview());
+  return family.children.find((child) => child.id === childId);
 }
 
 export async function getChildSessions(childId: string): Promise<ConversationSession[]> {
-  return wait(family.sessions.filter((session) => session.childId === childId));
+  const family = familyCache ?? (await getFamilyOverview());
+  return family.sessions.filter((session) => session.childId === childId);
 }
 
 export async function getSession(sessionId: string): Promise<ConversationSession | undefined> {
-  return wait(family.sessions.find((session) => session.id === sessionId));
+  const family = familyCache ?? (await getFamilyOverview());
+  return family.sessions.find((session) => session.id === sessionId);
 }
 
 export async function getToy(toyId: string): Promise<Toy | undefined> {
-  return wait(family.toys.find((toy) => toy.id === toyId));
+  const family = familyCache ?? (await getFamilyOverview());
+  return family.toys.find((toy) => toy.id === toyId);
 }

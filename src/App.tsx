@@ -55,10 +55,18 @@ const messageCount = (session: ConversationSession) => session.messages.length;
 
 function App() {
   const [data, setData] = useState<FamilyOverview | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [route, setRoute] = useState<Route>(() => routeFromPath(window.location.pathname));
 
   useEffect(() => {
-    getFamilyOverview().then(setData);
+    getFamilyOverview()
+      .then((overview) => {
+        setData(overview);
+        setLoadError(null);
+      })
+      .catch((error: unknown) => {
+        setLoadError(error instanceof Error ? error.message : "No se pudo cargar el backend.");
+      });
   }, []);
 
   useEffect(() => {
@@ -77,6 +85,17 @@ function App() {
     window.history.back();
   };
 
+  if (loadError) {
+    return (
+      <PhoneShell>
+        <div className="empty-state">
+          <strong>No se pudo conectar con el backend.</strong>
+          <span>{loadError}</span>
+        </div>
+      </PhoneShell>
+    );
+  }
+
   if (!data) {
     return (
       <PhoneShell>
@@ -86,6 +105,14 @@ function App() {
   }
 
   const firstChild = data.children[0];
+  if (!firstChild) {
+    return (
+      <PhoneShell>
+        <div className="empty-state">El backend no tiene niños registrados todavía.</div>
+      </PhoneShell>
+    );
+  }
+
   const currentChildId = "childId" in route ? route.childId : firstChild.id;
 
   return (
@@ -196,7 +223,11 @@ function HomePage({
       <div className="scroll">
         <div className="pad">
           <div className="stats-grid">
-            <Stat label="Conversaciones" value={`${activeSessions.length} activa`} accent />
+            <Stat
+              label="Conversaciones"
+              value={`${activeSessions.length} ${activeSessions.length === 1 ? "activa" : "activas"}`}
+              accent
+            />
             <Stat label="Mensajes" value={`${totalMessages} registrados`} />
           </div>
 
@@ -379,16 +410,20 @@ function SessionsPage({
           )}
 
           <SectionTitle>Historial</SectionTitle>
-          <div className="stack">
-            {closed.map((session) => (
-              <SessionCard
-                key={session.id}
-                data={data}
-                session={session}
-                onClick={() => navigate({ name: "session", childId: child.id, sessionId: session.id })}
-              />
-            ))}
-          </div>
+          {closed.length ? (
+            <div className="stack">
+              {closed.map((session) => (
+                <SessionCard
+                  key={session.id}
+                  data={data}
+                  session={session}
+                  onClick={() => navigate({ name: "session", childId: child.id, sessionId: session.id })}
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyState text="El backend actual solo entrega la sesion activa; el historial quedara disponible cuando exista ese endpoint." />
+          )}
         </div>
       </div>
     </>
