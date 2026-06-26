@@ -31,10 +31,11 @@
 
 body {
   min-width: 320px;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   background: #111;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 
 button {
@@ -42,16 +43,18 @@ button {
 }
 
 #root {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   background: #111;
+  overflow: hidden;
 }
 
 .phone-shell {
   width: 100%;
   max-width: 390px;
-  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
   background: var(--cream);
   display: flex;
   flex-direction: column;
@@ -68,6 +71,7 @@ button {
 .scroll,
 .chat-scroll {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
