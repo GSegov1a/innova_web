@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import {
+  ChildDiagnosticInsight,
   Child,
   ConversationSession,
   FamilyOverview,
   Toy,
   UsageEvent,
+  getChildDiagnosticInsight,
   getFamilyOverview,
 } from "./data/parentPortalData";
 
@@ -299,6 +301,34 @@ function ChildPage({
   const sessions = data.sessions.filter((session) => session.childId === child.id);
   const activeSession = sessions.find((session) => session.status === "active");
   const usageEvents = data.usageEvents.filter((event) => event.childId === child.id);
+  const [diagnostic, setDiagnostic] = useState<ChildDiagnosticInsight | null>(null);
+  const [diagnosticError, setDiagnosticError] = useState<string | null>(null);
+  const [diagnosticLoading, setDiagnosticLoading] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    setDiagnostic(null);
+    setDiagnosticError(null);
+    setDiagnosticLoading(true);
+
+    getChildDiagnosticInsight(child.id)
+      .then((insight) => {
+        if (!cancelled) setDiagnostic(insight);
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) {
+          setDiagnosticError(error instanceof Error ? error.message : "No se pudo generar el resumen.");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setDiagnosticLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [child.id]);
 
   return (
     <>
@@ -327,11 +357,32 @@ function ChildPage({
 
           <SectionTitle>Resumen</SectionTitle>
           <div className="card content-card">
-            <p>{child.personality}</p>
+            {diagnosticLoading ? (
+              <p className="muted">Generando resumen con IA...</p>
+            ) : (
+              <p>{diagnostic?.summary ?? child.personality}</p>
+            )}
             <div className="soft-note">
               <strong>Diagnostico base</strong>
-              <span>{child.diagnosisBase}</span>
+              <span>{diagnostic?.diagnosisBase ?? child.diagnosisBase}</span>
             </div>
+            {diagnostic?.signals.length ? (
+              <div className="insight-list">
+                <strong>Señales observadas</strong>
+                {diagnostic.signals.map((signal) => (
+                  <span key={signal}>{signal}</span>
+                ))}
+              </div>
+            ) : null}
+            {diagnostic?.recommendation ? (
+              <div className="soft-note">
+                <strong>Siguiente accion sugerida</strong>
+                <span>{diagnostic.recommendation}</span>
+              </div>
+            ) : null}
+            {diagnosticError ? (
+              <div className="insight-error">No se pudo generar con IA. Mostrando informacion base.</div>
+            ) : null}
           </div>
 
           <SectionTitle>Acciones</SectionTitle>

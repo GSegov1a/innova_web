@@ -405,6 +405,10 @@ button.card,
   font-size: 14px;
 }
 
+.content-card p.muted {
+  color: var(--ink-soft);
+}
+
 .soft-note {
   margin-top: 14px;
   padding: 12px 14px;
@@ -423,6 +427,34 @@ button.card,
 .soft-note span {
   color: var(--ink-mid);
   font-size: 13px;
+}
+
+.insight-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.insight-list strong {
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.insight-list span {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.insight-error {
+  margin-top: 12px;
+  color: var(--red);
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .grid-actions {

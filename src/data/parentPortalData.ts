@@ -69,6 +69,16 @@ export type FamilyOverview = {
   usageEvents: UsageEvent[];
 };
 
+export type ChildDiagnosticInsight = {
+  childId: string;
+  generatedAt: string;
+  model: string;
+  diagnosisBase: string;
+  summary: string;
+  signals: string[];
+  recommendation: string;
+};
+
 type BackendChild = {
   id: number;
   name: string;
@@ -91,6 +101,16 @@ type BackendTurn = {
   role: "child" | "assistant" | "toy" | string;
   text: string;
   created_at: string;
+};
+
+type BackendDiagnosticSummary = {
+  child_id: number;
+  generated_at: string;
+  model: string;
+  diagnosis_base: string;
+  summary: string;
+  signals: string[];
+  recommendation: string;
 };
 
 const API_BASE_URL = (
@@ -289,4 +309,18 @@ export async function getSession(sessionId: string): Promise<ConversationSession
 export async function getToy(toyId: string): Promise<Toy | undefined> {
   const family = familyCache ?? (await getFamilyOverview());
   return family.toys.find((toy) => toy.id === toyId);
+}
+
+export async function getChildDiagnosticInsight(childId: string): Promise<ChildDiagnosticInsight> {
+  const summary = await fetchJson<BackendDiagnosticSummary>(`/children/${childId}/diagnostic-summary`);
+
+  return {
+    childId: String(summary.child_id),
+    generatedAt: summary.generated_at,
+    model: summary.model,
+    diagnosisBase: summary.diagnosis_base,
+    summary: summary.summary,
+    signals: Array.isArray(summary.signals) ? summary.signals : [],
+    recommendation: summary.recommendation,
+  };
 }
